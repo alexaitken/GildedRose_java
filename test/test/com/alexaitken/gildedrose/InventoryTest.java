@@ -106,6 +106,18 @@ public class InventoryTest {
 		assertEquals(26, agedBrie.getQuality());
 	}
 	
+	@Test
+	public void should_double_the_increase_in_quality_of_aged_brie_after_its_sell_by_date_has_passed() throws Exception {
+		Item agedBrie = new Item("Aged Brie", -2, 25);
+		
+		Inventory sut = new Inventory((Item[]) Arrays.asList(agedBrie).toArray());
+		
+		sut.updateQuality();
+		
+		
+		assertEquals(27, agedBrie.getQuality());
+	}
+	
 	
 	@Test
 	public void should_not_increase_the_quality_of_aged_brie_over_50() throws Exception {
@@ -185,7 +197,29 @@ public class InventoryTest {
 	}
 	
 	
+	@Test
+	public void should_reduce_conjured_item_by_2_when_sell_in_date_has_not_passed() throws Exception {
+		Item conjuredItem = new Item("Conjured Mana Cake", 3, 6);
+		
+		Inventory sut = new Inventory((Item[]) Arrays.asList(conjuredItem).toArray());
+		
+		sut.updateQuality();
+		
+		
+		assertEquals(4, conjuredItem.getQuality());
+	}
 	
+	@Test
+	public void should_reduce_conjured_item_by_4_when_sell_in_date_has_passed() throws Exception {
+		Item conjuredItem = new Item("Conjured Mana Cake", 0, 6);
+		
+		Inventory sut = new Inventory((Item[]) Arrays.asList(conjuredItem).toArray());
+		
+		sut.updateQuality();
+		
+		
+		assertEquals(2, conjuredItem.getQuality());
+	}
 	
 	
 	
